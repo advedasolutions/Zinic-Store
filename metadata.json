@@ -1,8 +1,0 @@
-{
-  "name": "Zinic",
-  "description": "Enterprise-grade multi-tenant asset management platform.",
-  "version": "1.1.0",
-  "requestFramePermissions": [
-    "camera"
-  ]
-}
