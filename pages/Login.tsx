@@ -107,9 +107,9 @@ export const Login: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen w-full flex flex-col lg:flex-row bg-[#010409] selection:bg-brand-accent selection:text-brand-navy font-sans antialiased overflow-hidden">
+    <div className="min-h-screen w-full flex flex-col lg:flex-row bg-[#010409] selection:bg-brand-accent selection:text-brand-navy font-sans antialiased overflow-x-hidden">
       {/* Background Pattern */}
-      <div className="fixed inset-0 opacity-20 pointer-events-none" style={{ backgroundImage: 'radial-gradient(#00D1FF 0.5px, transparent 0.5px)', backgroundSize: '24px 24px' }}></div>
+      <div className="fixed inset-0 opacity-10 pointer-events-none" style={{ backgroundImage: 'radial-gradient(#00D1FF 0.5px, transparent 0.5px)', backgroundSize: '24px 24px' }}></div>
       <div className="mesh-gradient absolute inset-0 -z-10 opacity-60"></div>
 
       {/* Brand Side (Desktop) */}
@@ -151,24 +151,34 @@ export const Login: React.FC = () => {
       </div>
 
       {/* Form Side */}
-      <div className="flex-1 flex items-center justify-center p-6 relative z-10">
-        {/* Animated Floating Logo (Interaction Triggered) */}
+      <div className="flex-1 flex flex-col items-center justify-center p-6 lg:p-12 relative z-10 min-h-screen">
+        
+        {/* Mobile-Only Header Brand - Properly Spaced to prevent overlap */}
         <div 
-          className={`fixed z-[100] transition-all duration-700 ease-in-out pointer-events-none flex flex-col items-center lg:items-end ${
-            isInteracting 
-              ? 'top-8 right-8 scale-50 opacity-100' 
-              : 'top-1/2 left-1/2 -translate-x-1/2 -translate-y-[280%] lg:hidden scale-100 opacity-100'
+          className={`lg:hidden flex flex-col items-center mb-10 transition-all duration-700 ${
+            isInteracting ? 'opacity-0 scale-90 -translate-y-10' : 'opacity-100'
           }`}
         >
           <Logo size="lg" />
-          <div className={`mt-2 transition-opacity duration-500 ${isInteracting ? 'opacity-0 h-0 overflow-hidden' : 'opacity-100'}`}>
-            <h1 className="text-3xl font-black text-white tracking-tighter text-center">Zinic<span className="text-brand-accent">.</span></h1>
+          <div className="mt-4 text-center">
+            <h1 className="text-4xl font-black text-white tracking-tighter">Zinic<span className="text-brand-accent">.</span></h1>
+            <p className="text-[10px] font-black text-brand-accent/40 uppercase tracking-[0.4em] mt-1">Supply Protocol</p>
           </div>
         </div>
 
-        <div className={`w-full max-w-[480px] transition-all duration-700 ${isInteracting ? 'translate-y-0' : 'translate-y-8'}`}>
-          <div className="bg-[#0D1117]/80 backdrop-blur-3xl p-10 lg:p-14 rounded-[3.5rem] shadow-[0_40px_100px_rgba(0,0,0,0.5)] border border-white/5 relative overflow-hidden group">
-            {/* Subtle glow effect */}
+        {/* Small Floating Logo - Top Right when interacting */}
+        <div 
+          className={`fixed z-[100] transition-all duration-700 ease-in-out pointer-events-none ${
+            isInteracting 
+              ? 'top-8 right-8 scale-50 opacity-100 visible' 
+              : 'top-8 right-8 scale-50 opacity-0 invisible'
+          }`}
+        >
+          <Logo size="lg" />
+        </div>
+
+        <div className={`w-full max-w-[480px] transition-all duration-700 ${isInteracting ? 'translate-y-0' : 'translate-y-4'}`}>
+          <div className="bg-[#0D1117]/80 backdrop-blur-3xl p-8 lg:p-14 rounded-[3rem] lg:rounded-[3.5rem] shadow-[0_40px_100px_rgba(0,0,0,0.5)] border border-white/5 relative overflow-hidden group">
             <div className="absolute -top-24 -right-24 w-48 h-48 bg-brand-accent/5 rounded-full blur-[60px] group-hover:bg-brand-accent/10 transition-colors"></div>
 
             <div className="relative z-10 space-y-10">
@@ -186,7 +196,7 @@ export const Login: React.FC = () => {
                     <Input 
                       label="Entity Identifier" 
                       placeholder="e.g. ZNC-8801" 
-                      className="!bg-white/5 !border-white/10 !text-white !py-5 focus:!border-brand-accent/40 !rounded-2xl placeholder:!text-slate-600"
+                      className="!bg-white/5 !border-white/10 !text-white !py-5 focus:!border-brand-accent/40 !rounded-2xl placeholder:!text-slate-600 transition-all"
                       value={formData.clientId} 
                       onChange={e => setFormData({...formData, clientId: e.target.value.toUpperCase()})} 
                       onFocus={() => setFocusedField('clientId')} 
@@ -204,7 +214,7 @@ export const Login: React.FC = () => {
                     <Input 
                       label="Staff Credentials" 
                       placeholder="Username" 
-                      className="!bg-white/5 !border-white/10 !text-white !py-5 focus:!border-brand-accent/40 !rounded-2xl placeholder:!text-slate-600"
+                      className="!bg-white/5 !border-white/10 !text-white !py-5 focus:!border-brand-accent/40 !rounded-2xl placeholder:!text-slate-600 transition-all"
                       value={formData.username} 
                       onChange={e => setFormData({...formData, username: e.target.value})} 
                       onFocus={() => setFocusedField('username')} 
@@ -220,7 +230,7 @@ export const Login: React.FC = () => {
                       label="Security Key" 
                       type="password" 
                       placeholder="Master Secret" 
-                      className="!bg-white/5 !border-white/10 !text-white !py-5 focus:!border-brand-accent/40 !rounded-2xl placeholder:!text-slate-600"
+                      className="!bg-white/5 !border-white/10 !text-white !py-5 focus:!border-brand-accent/40 !rounded-2xl placeholder:!text-slate-600 transition-all"
                       value={formData.password} 
                       onChange={e => setFormData({...formData, password: e.target.value})} 
                       onFocus={() => setFocusedField('password')} 
@@ -267,13 +277,13 @@ export const Login: React.FC = () => {
         </div>
       </div>
 
-      {/* DEMO MODAL (Redesigned) */}
+      {/* DEMO MODAL */}
       {showDemoModal && (
         <div className="fixed inset-0 z-[200] flex items-center justify-center p-6 bg-brand-deep/90 backdrop-blur-2xl">
-          <div className="bg-[#0D1117] border border-white/10 rounded-[3.5rem] w-full max-w-xl p-10 lg:p-14 animate-reveal relative shadow-[0_50px_100px_rgba(0,0,0,0.8)] overflow-hidden">
+          <div className="bg-[#0D1117] border border-white/10 rounded-[3rem] lg:rounded-[3.5rem] w-full max-w-xl p-8 lg:p-14 animate-reveal relative shadow-[0_50px_100px_rgba(0,0,0,0.8)] overflow-hidden">
             <div className="absolute -top-32 -left-32 w-64 h-64 bg-brand-accent/5 rounded-full blur-[80px]"></div>
             
-            <button onClick={() => setShowDemoModal(false)} className="absolute top-10 right-10 p-3 bg-white/5 rounded-2xl text-slate-500 hover:text-rose-500 transition-all">
+            <button onClick={() => setShowDemoModal(false)} className="absolute top-8 right-8 p-3 bg-white/5 rounded-2xl text-slate-500 hover:text-rose-500 transition-all">
               <X size={24} />
             </button>
 
@@ -283,21 +293,21 @@ export const Login: React.FC = () => {
                   <div className="w-16 h-16 bg-brand-accent/10 rounded-2xl flex items-center justify-center text-brand-accent mb-6">
                     <Zap size={32} fill="currentColor" />
                   </div>
-                  <h2 className="text-4xl font-black text-white tracking-tight">Rapid Onboarding</h2>
-                  <p className="text-slate-400 font-medium">Provision a secure trial node for your organization.</p>
+                  <h2 className="text-3xl lg:text-4xl font-black text-white tracking-tight">Rapid Onboarding</h2>
+                  <p className="text-slate-400 font-medium text-sm">Provision a secure trial node for your organization.</p>
                 </div>
 
                 <form onSubmit={handleDemoLaunch} className="space-y-5">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                     <Input 
-                      label="Authorized Representative" 
+                      label="Representative Name" 
                       className="!bg-white/5 !border-white/10 !text-white !rounded-2xl"
                       value={demoData.fullName} 
                       onChange={e => setDemoData({...demoData, fullName: e.target.value})} 
                       required 
                     />
                     <Input 
-                      label="Direct Contact Node" 
+                      label="Contact Node" 
                       className="!bg-white/5 !border-white/10 !text-white !rounded-2xl"
                       value={demoData.mobile} 
                       onChange={e => setDemoData({...demoData, mobile: e.target.value})} 
@@ -329,7 +339,7 @@ export const Login: React.FC = () => {
                   <CheckCircle size={48} />
                 </div>
                 <div>
-                  <h3 className="text-4xl font-black text-white tracking-tight">Provisioning Complete</h3>
+                  <h3 className="text-3xl lg:text-4xl font-black text-white tracking-tight">Provisioning Complete</h3>
                   <p className="text-slate-400 mt-2 font-medium">Your ephemeral cloud terminal is now live.</p>
                 </div>
                 
